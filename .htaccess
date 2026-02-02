@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^api/techs/?$ /api/techs.php [L,NC,QSA]
