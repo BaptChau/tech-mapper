@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 
 const app = express();
-const PORT = 5173;
+const PORT = process.env.PORT || 5173;
 const isDev = process.env.APP_ENV === "dev";
 const TECH_PASSWORD =
   process.env.TECH_PASSWORD || (isDev ? "jenesuispaslevraimotdepasse" : "");
