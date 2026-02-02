@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech → Langage</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://unpkg.com" />
+  </head>
+  <body>
+    <main id="app" class="page">
+      <header class="hero">
+        <p class="kicker">Base de connaissance locale</p>
+        <h1>Tech → Langage</h1>
+        <p class="lead">
+          Saisis une techno et retrouve le langage principal. Ajoute les manquantes
+          en un clic. KISS, rapide, local.
+        </p>
+      </header>
+
+      <section class="panel">
+        <h2>Recherche</h2>
+        <form class="row" @submit.prevent="searchTech">
+          <input
+            v-model="query"
+            type="text"
+            placeholder="Ex. Symfony, Spring Boot, Angular"
+            autocomplete="off"
+            required
+          />
+          <button type="submit">Trouver</button>
+        </form>
+        <div class="result" v-if="result">
+          <span class="label">Langage :</span>
+          <strong>{{ result.language }}</strong>
+        </div>
+        <div class="result muted" v-else>
+          <span class="label">Langage :</span>
+          <span>—</span>
+        </div>
+        <p class="hint" v-if="notFound">
+          Pas trouvé. Ajoute-le dans la section ci-dessous.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Ajouter une techno</h2>
+        <form class="grid" @submit.prevent="addTech">
+          <label>
+            Techno
+            <input v-model="newTech" type="text" placeholder="Ex. Django" required />
+          </label>
+          <label>
+            Langage
+            <input v-model="newLanguage" type="text" placeholder="Ex. Python" required />
+          </label>
+          <label>
+            Mot de passe
+            <input
+              v-model="passwordInput"
+              type="password"
+              placeholder="Mot de passe API"
+              required
+            />
+          </label>
+          <button type="submit">Ajouter</button>
+        </form>
+        <p class="hint" v-if="addError">{{ addError }}</p>
+      </section>
+
+      <section class="panel">
+        <div class="row">
+          <h2>Liste complète</h2>
+          <input
+            v-model="techFilter"
+            type="search"
+            placeholder="Filtrer par techno…"
+          />
+          <input
+            v-model="languageFilter"
+            type="search"
+            placeholder="Filtrer par langage…"
+          />
+          <label class="check">
+            <input v-model="strictFilter" type="checkbox" />
+            Recherche stricte
+          </label>
+          <button type="button" class="ghost" @click="resetFilters">
+            Reset filtres
+          </button>
+        </div>
+        <div class="list">
+          <div class="list-head">
+            <span>Techno</span>
+            <span>Langage</span>
+          </div>
+          <div
+            v-for="item in filteredList"
+            :key="item.tech"
+            class="list-row"
+          >
+            <span>{{ item.tech }}</span>
+            <span>{{ item.language }}</span>
+          </div>
+        </div>
+        <p class="count">{{ filteredList.length }} entrées</p>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
